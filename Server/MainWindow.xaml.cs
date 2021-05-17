@@ -75,8 +75,8 @@ namespace CourseProjectCryptography2021
                     //export keys
                     rsaCore.ExportPubKey(pubKeyFileName);
                     rsaCore.ExportPrivateKey(privateKeyFileName);
-                    MessageBox.Show(pubKeyFileName);
-                    MessageBox.Show(clientLocation+getFileNameOnly(pubKeyFileName));
+                    MessageBox.Show("Public key is now exported to the Client app");
+                    //MoveFile
                     try
                     {
                         File.Move(pubKeyFileName, clientLocation + getFileNameOnly(pubKeyFileName));
@@ -94,7 +94,7 @@ namespace CourseProjectCryptography2021
                     //     string fileName = "./resources/mainMenu.jpg";
                     //     string requestURL = "http://localhost:8080/storage/files?file="+fileName;
                     //     
-                    //     WebClient wc = new WebClient();  
+                    //     WECBlient wc = new WECBlient();  
                     //     // byte[] bytes = wc.DownloadData(fileName); // You need to do this download if your file is on any other server otherwise you can convert that file directly to bytes  
                     //     byte[] bytes = File.ReadAllBytes(fileName);
                     //     Dictionary < string, object > postParameters = new Dictionary < string, object > ();  
@@ -234,10 +234,12 @@ namespace CourseProjectCryptography2021
                     
                     var decryptedKeyFilePath = "./resources/DecryptedSymmetricKey";
                     CypherMethods.DecryptKey(rsaCore, _mainWindowViewModel.SymmetricKeyFile, decryptedKeyFilePath);
-                    var decryptedIvFilePath = "./resources/DecryptedIv";
-                    CypherMethods.DecryptKey(rsaCore, _mainWindowViewModel.IvFilePath, decryptedIvFilePath);
-
                     
+                    var decryptedIvFilePath = "./resources/DecryptedIv";
+                    if (_mainWindowViewModel.EncryptionMode != "ECB")
+                        CypherMethods.DecryptKey(rsaCore, _mainWindowViewModel.IvFilePath, decryptedIvFilePath);
+
+
                     // var decryptedKeyFilePath = "./resources/key";
                     // var decryptedIvFilePath = "./resources/IV";
                     //
@@ -245,7 +247,8 @@ namespace CourseProjectCryptography2021
                     _mainWindowViewModel.MainTaskManager = new TaskManager(decryptedKeyFilePath,_mainWindowViewModel.MagentaKeySize, _mainWindowViewModel.EncryptionMode);
                     
                     _mainWindowViewModel.MainTaskManager.keyFilePath = decryptedKeyFilePath;
-                    _mainWindowViewModel.MainTaskManager.ivFilePath = decryptedIvFilePath;
+                    if (_mainWindowViewModel.EncryptionMode != "ECB")
+                        _mainWindowViewModel.MainTaskManager.ivFilePath = decryptedIvFilePath;
                     _mainWindowViewModel.MainTaskManager.inputFilePath = _mainWindowViewModel.DataFile;
                     _mainWindowViewModel.MainTaskManager.outputFilePath = outputFileName;
                     
@@ -350,6 +353,16 @@ namespace CourseProjectCryptography2021
 
 
 
+
+
+
+        private void MoveFile(string sourceFilePath, string destFilePath)
+        {
+            if (File.Exists(clientLocation + getFileNameOnly(destFilePath)))
+                File.Replace(sourceFilePath, clientLocation + getFileNameOnly(destFilePath), null);
+            else
+                File.Move(sourceFilePath, clientLocation + getFileNameOnly(destFilePath));
+        }
         private string getFileNameOnly(string filePath)
         {
             StringBuilder res = new StringBuilder();

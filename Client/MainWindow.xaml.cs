@@ -48,20 +48,7 @@ namespace CourseProjectCryptography2021
             var outputFileName = OutPutFilePathHolder.Text;
 
             var pubKeyFileName = _mainWindowViewModel.PublicKeyFile;
-            // get RSA key size
-            int rsaKeySize = 516;
-            try
-            {
-                rsaKeySize = Int32.Parse(RsaKeySizeHolder.Text);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Wrong RSA key size, will be used <516>");
-            }
 
-
-            
-            
 
             Task.Run(() =>
             {
@@ -89,7 +76,7 @@ namespace CourseProjectCryptography2021
                             outputStream.Write(magentaKey, 0, magentaKey.Length);
                     }
 
-                    if (_mainWindowViewModel.IvFilePath == null)
+                    if (_mainWindowViewModel.IvFilePath == null &&  _mainWindowViewModel.EncryptionMode != "ECB")
                     {
                         RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
                         byte[] IV = new byte[16];
@@ -106,7 +93,7 @@ namespace CourseProjectCryptography2021
                             outputStream.Write(IV, 0, IV.Length);
                     }
 
-                    rsaCore = new RsaCore(rsaKeySize,generateKeys:false);
+                    rsaCore = new RsaCore(generateKeys:false);
                     rsaCore.ImportPubKey(pubKeyFileName);
                     
                     CypherMethods.EncryptKey(rsaCore, _mainWindowViewModel.SymmetricKeyFile, _mainWindowViewModel.SymmetricKeyFile+"Encrypted");
@@ -119,17 +106,21 @@ namespace CourseProjectCryptography2021
                     {
                         File.Replace(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+getFileNameOnly("EncryptedSymmetricKey"), null);    
                     }
+
+                    if (_mainWindowViewModel.EncryptionMode != "ECB")
+                    {
+                        CypherMethods.EncryptKey(rsaCore, _mainWindowViewModel.IvFilePath, _mainWindowViewModel.IvFilePath+"Encrypted");
+                        //File.Replace(getFileNameOnly(_mainWindowViewModel.IvFilePath+"Encrypted"), getFileNameOnly(serverLocation+"EncryptedIV"), null);
+                        try
+                        {
+                            File.Move((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"));
+                        }
+                        catch
+                        {
+                            File.Replace((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"), null);    
+                        }
+                    }
                     
-                    CypherMethods.EncryptKey(rsaCore, _mainWindowViewModel.IvFilePath, _mainWindowViewModel.IvFilePath+"Encrypted");
-                    //File.Replace(getFileNameOnly(_mainWindowViewModel.IvFilePath+"Encrypted"), getFileNameOnly(serverLocation+"EncryptedIV"), null);
-                    try
-                    {
-                        File.Move((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"));
-                    }
-                    catch
-                    {
-                        File.Replace((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"), null);    
-                    }
 
                     // rsaCore.ImportPubKey(_mainWindowViewModel.PrivateKeyFile);
                     // CypherMethods.DecryptKey(rsaCore, _mainWindowViewModel.SymmetricKeyFile+"Encrypted2", _mainWindowViewModel.SymmetricKeyFile+"!!!DEcrypted");
@@ -142,7 +133,8 @@ namespace CourseProjectCryptography2021
                     
                     _mainWindowViewModel.MainTaskManager = new TaskManager(_mainWindowViewModel.SymmetricKeyFile,_mainWindowViewModel.MagentaKeySize, _mainWindowViewModel.EncryptionMode);
                     
-                    _mainWindowViewModel.MainTaskManager.ivFilePath = _mainWindowViewModel.IvFilePath;
+                    if (_mainWindowViewModel.EncryptionMode != "ECB")
+                        _mainWindowViewModel.MainTaskManager.ivFilePath = _mainWindowViewModel.IvFilePath;
                     _mainWindowViewModel.MainTaskManager.inputFilePath = _mainWindowViewModel.DataFile;
                     _mainWindowViewModel.MainTaskManager.outputFilePath = outputFileName;
                     

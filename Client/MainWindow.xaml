@@ -70,18 +70,6 @@
                         </StackPanel>
                         
                         <StackPanel
-                            Grid.Column="1"
-                            Grid.Row="0">
-                            <TextBlock TextAlignment="Center">
-                                RSA key size
-                            </TextBlock>
-                            <TextBox
-                                x:Name="RsaKeySizeHolder">
-                                516
-                            </TextBox>
-                        </StackPanel>
-                        
-                        <StackPanel
                             Grid.Column="2"
                             Grid.Row="0">
                             <TextBlock TextAlignment="Center">

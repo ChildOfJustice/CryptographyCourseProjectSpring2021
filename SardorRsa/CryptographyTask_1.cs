@@ -6,18 +6,20 @@ namespace SardorRsa
     {
         public static BigInteger FastPowMod(BigInteger baseNum, BigInteger exponent, BigInteger modulus)
         {
+            //return BigInteger.ModPow(baseNum, exponent, modulus);
             if (modulus == 1)
                 return 0;
             BigInteger curPow = baseNum % modulus;
             BigInteger res = 1;
             while(exponent > 0){
-                if (exponent % 2 == 1)
+                if ((exponent & 1) == 1)
                     res = (res * curPow) % modulus;
-                exponent = exponent / 2;
+                exponent = exponent >> 1;
                 curPow = (curPow * curPow) % modulus; 
             }
             return res;
         }
+        
         public static BigInteger GreatestCommonDivizor(BigInteger x, BigInteger y)
         {
             BigInteger tmp;
