@@ -58,6 +58,8 @@
           <DependentUpon>CircularProgressBar.xaml</DependentUpon>
         </Compile>
         <Compile Include="Spinner\SpinnerViewModel.cs" />
+        <Compile Include="Web\FormUpload.cs" />
+        <Compile Include="Web\MultiPartUpload.cs" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>

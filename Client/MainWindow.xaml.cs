@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,8 @@ namespace CourseProjectCryptography2021
     {
         private MainWindowViewModel _mainWindowViewModel;
         private RsaCore rsaCore;
+        
+        private string serverLocation = "C:\\Users\\Administrator\\Desktop\\READY\\Cryptography\\CryptographyCourseProjectSpring2021\\Server\\bin\\Debug\\resources\\";
         
         public MainWindow()
         {
@@ -107,9 +110,26 @@ namespace CourseProjectCryptography2021
                     rsaCore.ImportPubKey(pubKeyFileName);
                     
                     CypherMethods.EncryptKey(rsaCore, _mainWindowViewModel.SymmetricKeyFile, _mainWindowViewModel.SymmetricKeyFile+"Encrypted");
-                    //File.Move(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+"EncryptedSymmetricKey");
+                    // File.Replace(getFileNameOnly(_mainWindowViewModel.SymmetricKeyFile+"Encrypted"), getFileNameOnly(serverLocation+"EncryptedSymmetricKey"), null);
+                    try
+                    {
+                        File.Move(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+getFileNameOnly("EncryptedSymmetricKey"));
+                    }
+                    catch
+                    {
+                        File.Replace(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+getFileNameOnly("EncryptedSymmetricKey"), null);    
+                    }
+                    
                     CypherMethods.EncryptKey(rsaCore, _mainWindowViewModel.IvFilePath, _mainWindowViewModel.IvFilePath+"Encrypted");
-                    //File.Move(_mainWindowViewModel.IvFilePath+"Encrypted", serverLocation+"EncryptedIV");
+                    //File.Replace(getFileNameOnly(_mainWindowViewModel.IvFilePath+"Encrypted"), getFileNameOnly(serverLocation+"EncryptedIV"), null);
+                    try
+                    {
+                        File.Move((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"));
+                    }
+                    catch
+                    {
+                        File.Replace((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"), null);    
+                    }
 
                     // rsaCore.ImportPubKey(_mainWindowViewModel.PrivateKeyFile);
                     // CypherMethods.DecryptKey(rsaCore, _mainWindowViewModel.SymmetricKeyFile+"Encrypted2", _mainWindowViewModel.SymmetricKeyFile+"!!!DEcrypted");
@@ -127,7 +147,16 @@ namespace CourseProjectCryptography2021
                     _mainWindowViewModel.MainTaskManager.outputFilePath = outputFileName;
                     
                     _mainWindowViewModel.MainTaskManager.RunEncryptionProcess();
-                    //File.Move(outputFileName, serverLocation+outputFileName);
+                    // File.Replace(getFileNameOnly(outputFileName), getFileNameOnly(serverLocation+outputFileName), null);
+                    try
+                    {
+                        File.Move((outputFileName), serverLocation+getFileNameOnly(outputFileName));
+                    }
+                    catch
+                    {
+                        File.Replace((outputFileName), serverLocation+getFileNameOnly(outputFileName), null);    
+                    }
+                    
                     Application.Current.Dispatcher.Invoke(() => 
                     {
                         removeContent();
@@ -223,6 +252,35 @@ namespace CourseProjectCryptography2021
         private void removeContent()
         {
             ProgressBar.Content = null;
+        }
+        
+        private string getFileNameOnly(string filePath)
+        {
+            StringBuilder res = new StringBuilder();
+            for (int i = filePath.Length-1; i >= 0; i--)
+            {
+                if (filePath[i] == '/')
+                    break;
+                res.Append(filePath[i]);
+            }
+
+            Reverse(res);
+            return res.ToString();
+        }
+        public static void Reverse(StringBuilder sb)
+        {
+            char t;
+            int end = sb.Length - 1;
+            int start = 0;
+    
+            while (end - start > 0)
+            {
+                t = sb[end];
+                sb[end] = sb[start];
+                sb[start] = t;
+                start++;
+                end--;
+            }
         }
     }
 }
