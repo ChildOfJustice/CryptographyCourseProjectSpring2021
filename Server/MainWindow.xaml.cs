@@ -53,14 +53,17 @@ namespace CourseProjectCryptography2021
             var pubKeyFileName = OutPutPubKeyFilePathHolder.Text;
             var privateKeyFileName = OutPutPrivateKeyFilePathHolder.Text;
             // get RSA key size
-            int rsaKeySize = 516;
+            int rsaKeySize = 512;
             try
             {
                 rsaKeySize = Int32.Parse(RsaKeySizeHolder.Text);
+                if (rsaKeySize < 512)
+                    throw new ArgumentException("Bad RSA key size");
             }
             catch (Exception exception)
             {
-                MessageBox.Show("Wrong RSA key size, will be used <516>");
+                MessageBox.Show("Wrong RSA key size, will be used <512>");
+                rsaKeySize = 512;
             }
             Task.Run(() =>
             {
@@ -209,14 +212,17 @@ namespace CourseProjectCryptography2021
             var privateKeyFileName = _mainWindowViewModel.PrivateKeyFile;
 
             // get RSA key size
-            int rsaKeySize = 516;
+            int rsaKeySize = 512;
             try
             {
                 rsaKeySize = Int32.Parse(RsaKeySizeHolder.Text);
+                if (rsaKeySize < 512)
+                    throw new ArgumentException("Bad RSA key size");
             }
             catch (Exception exception)
             {
-                MessageBox.Show("Wrong RSA key size, will be used <516>");
+                MessageBox.Show("Wrong RSA key size, will be used <512>");
+                rsaKeySize = 512;
             }
             
             Task.Run(() =>
@@ -336,7 +342,7 @@ namespace CourseProjectCryptography2021
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
         {
             _mainWindowViewModel.MainTaskManager.Cancel();
-            
+            removeContent();
         }
 
         private void setContent()

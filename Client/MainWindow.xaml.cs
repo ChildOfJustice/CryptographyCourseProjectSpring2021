@@ -237,7 +237,8 @@ namespace CourseProjectCryptography2021
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
         {
             _mainWindowViewModel.MainTaskManager.Cancel();
-            
+            removeContent();
+
         }
 
         private void setContent(string message)

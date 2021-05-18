@@ -90,7 +90,7 @@
                                 Grid.Column="0"
                                 Grid.Row="4"
                                 x:Name="OutPutFilePathHolder">
-                                ./resources/YourDecryptedFile
+                                ./resources/OutPutFile
                             </TextBox>
                         </Grid>
                         
@@ -146,7 +146,7 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -164,14 +164,14 @@
                         Send file
                     </Button>
                     
-                    <Button
-                        Grid.Column="1"
-                        Click="OnCancelButtonClick"
-                        Foreground="Red"
-                        FontSize="30"
-                        Margin="55">
-                        Cancel
-                    </Button>
+                    <!-- <Button -->
+                    <!--     Grid.Column="1" -->
+                    <!--     Click="OnCancelButtonClick" -->
+                    <!--     Foreground="Red" -->
+                    <!--     FontSize="30" -->
+                    <!--     Margin="55"> -->
+                    <!--     Cancel -->
+                    <!-- </Button> -->
                 </Grid>
             </Grid>
             

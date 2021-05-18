@@ -46,18 +46,9 @@ namespace SardorRsa
 
         private void GenerateKeys()
         {
-            //Generating primes, checking if the GCD of (n-1)(p-1) and e is 1.
-            //BigInteger q,p,n,phi,d = new BigInteger();
-            //do
-            //{
             q = CryptographyTask_2.FindPrime(keySize / 2);
-            //} while (q % Constants.e == 1);
-            //do
-            //{
             p = CryptographyTask_2.FindPrime(keySize / 2);
-            //} while (p % Constants.e == 1);
-
-            //Setting n as QP, phi (represented here as x) to tortiary.
+            
             n = q * p;
             phi = (p - 1) * (q - 1);
 
@@ -86,9 +77,6 @@ namespace SardorRsa
             
             
             
-            
-            
-            
             //Computing D such that ed = 1%x.
             //d = Maths.ModularInverse(Constants.e, x);
             BigInteger x1;
@@ -100,8 +88,6 @@ namespace SardorRsa
 
 
             NumberSize = LogPow2(n, 8) + 1;
-            //Console.WriteLine("log: " + NumberSize);
-            //Console.WriteLine("real: " + EncryptOneByte(200).ToByteArray().Length);
         }
         public BigInteger EncryptOneByte(byte mToPow)
         {

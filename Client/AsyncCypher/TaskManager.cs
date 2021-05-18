@@ -51,8 +51,7 @@ namespace Task_8.AsyncCypher
         public void RunEncryptionProcess()
         {
             ImportCypherKey();
-
-            //https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskcompletionsource-1?view=net-5.0
+            
             CancellationToken ct = tokenSource.Token;
             
             blocksQuantity = DetermineBlocksQuantity(true);
@@ -76,22 +75,16 @@ namespace Task_8.AsyncCypher
                 var i1 = i;
                 Task.Factory.StartNew(() =>
                 {
-                    // Were we already canceled?
                     ct.ThrowIfCancellationRequested();
 
                     try
                     {
                         int endPositionToRead = (i1 + 1) * blockSize;
                         string keyFilePathToUse = keyFilePath;
-
-                        // var tempRF = new AesCore(TempKey, generateRoundKeys:false);
-                        // tempRF.RoundKeys = CypherFramework.RoundKeys;
                         
                         var temp = new MagentaCore();
                         temp.FeistelRoundQuantity = 6;
                         temp.Key = Algorithm.key;
-                        
-                        //temp.SetRoundKeys(((MagentaCore)algorithm).GetRoundKeys());
                         
                         if (i1 == blocksQuantity-1)
                         {

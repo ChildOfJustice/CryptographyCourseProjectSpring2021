@@ -6,7 +6,6 @@ namespace SardorRsa
     {
         public static BigInteger FastPowMod(BigInteger baseNum, BigInteger exponent, BigInteger modulus)
         {
-            //return BigInteger.ModPow(baseNum, exponent, modulus);
             if (modulus == 1)
                 return 0;
             BigInteger curPow = baseNum % modulus;

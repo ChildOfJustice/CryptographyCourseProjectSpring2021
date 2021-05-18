@@ -180,6 +180,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+                        
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -214,8 +215,8 @@
                     <!--     Grid.Column="2" -->
                     <!--     Click="OnCancelButtonClick" -->
                     <!--     Foreground="Red" -->
-                    <!--     FontSize="50" -->
-                    <!--     Margin="15"> -->
+                    <!--     FontSize="30" -->
+                    <!--     Margin="55"> -->
                     <!--     Cancel -->
                     <!-- </Button> -->
                 </Grid>

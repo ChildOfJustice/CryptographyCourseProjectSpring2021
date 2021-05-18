@@ -216,31 +216,21 @@ namespace MagentaAlgorithm
 
         public byte f(byte x)
         {
-            // Console.Write("f(" + x + ")=");
-            // Console.WriteLine(Convert.ToString(MagentaSbox[x], 2));
             return MagentaSbox[x];
         }
 
         public byte A(byte x, byte y)
         {
-            // Console.Write("A(" + x + ","+y+")=");
-            // Console.WriteLine(Convert.ToString(f((byte)(x ^ f(y))), 2));
             return f((byte)(x ^ f(y)));
         }
 
         public int PE(byte x, byte y)
         {
-            //Console.Write("INPUT: " + x + " " + y + " res: ");
-            //Console.WriteLine((A(x, y) << byteSize) | A(y, x));
             return (A(x, y) << byteSize) | A(y, x);
         }
         
         public BigInteger Pi(BigInteger digit16bytes)
         {
-            //Console.Write("INPUT: " + from0to15 + " res: ");
-            //Console.WriteLine(digit16bytes.ToString("X"));
-            //Console.WriteLine("0 byte: " + GetByte(digit16bytes, 0));
-            //Console.WriteLine("8 byte: " + GetByte(digit16bytes, 8));
             BigInteger res = 0;
             for (int i = 0; i < byteSize; i++)
             {
@@ -250,10 +240,6 @@ namespace MagentaAlgorithm
                 res <<= 2*byteSize;
                 res |= tempPe;
             }
-            //Console.Write("Pi(" + from0to15 + ")=");
-            //Console.WriteLine(Convert.ToString(f((byte)(x ^ f(y))), 2));
-            //Console.WriteLine(res);
-            // Console.WriteLine(Convert.ToString((long)res, 2));
             return res;
         }
         public byte GetByte(BigInteger value, int i)
@@ -263,7 +249,6 @@ namespace MagentaAlgorithm
             for (int j = 15-i; j > 0; j--)
             {
                 res >>= byteSize;
-                //Console.WriteLine("!!" + res.ToString("X"));
             }
             return (byte)(res & MaskByte);
         }
@@ -271,10 +256,9 @@ namespace MagentaAlgorithm
 
         public BigInteger T(BigInteger digit16bytes)
         {
-            //Console.WriteLine(Convert.ToString((long)Pi(Pi(Pi(Pi(from0to15)))), 2));
             return Pi(Pi(Pi(Pi(digit16bytes))));
         }
-        //
+        
         public BigInteger S(BigInteger digit16bytes)
         {
             uint MaskByte = ((uint)1 << 8) - 1;
@@ -294,27 +278,24 @@ namespace MagentaAlgorithm
             
             return res;
         }
-        //
+        
         public BigInteger C(int n, BigInteger w)
         {
-            //Console.WriteLine("INPUT: " + w.ToString("X"));
             if (n == 1)
                 return T(w);
             var res = T(w ^ S(C(n - 1, w)));
-            //Console.WriteLine("RES " + res.ToString("X"));
+            
             return res;
         }
-        //
-        //
+        
         public ulong F(BigInteger rightHalf, ulong subKey)
         {
             BigInteger R = rightHalf;
             R <<= byteSize*8;
             R |= subKey;
-            //The F function equals the first eight bytes of S(C(3,(X(2),SK(n)))).
+            
             var fValue = S(C(3, R));
-            //var fValue = C(3, R);
-            //Console.WriteLine(fValue.ToString("X"));
+            
             fValue >>= 8 * byteSize;
             
             return (ulong)fValue;
