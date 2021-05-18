@@ -425,15 +425,16 @@ namespace Task_8.AsyncCypher
                     // {
                         //plainTextBytes = binReader.ReadBytes(fullArrSize);
                     //}
+                    using (var outputStream = File.Open(outputFilePath, FileMode.Append))
+                    {
+                        MessageBox.Show("Output file is " + outputFilePath);
+                        outputStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                        outputStream.Close();
+                    }
                     
                 }
                 
-                using (var outputStream = File.Open(outputFilePath, FileMode.Create))
-                {
-                    MessageBox.Show("Output file is " + outputFilePath);
-                    outputStream.Write(plainTextBytes, 0, plainTextBytes.Length);
-                    outputStream.Close();
-                }
+                
             }
             
         }

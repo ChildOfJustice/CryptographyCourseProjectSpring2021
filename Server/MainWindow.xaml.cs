@@ -76,15 +76,15 @@ namespace CourseProjectCryptography2021
                     rsaCore.ExportPubKey(pubKeyFileName);
                     rsaCore.ExportPrivateKey(privateKeyFileName);
                     MessageBox.Show("Public key is now exported to the Client app");
-                    //MoveFile
-                    try
-                    {
-                        File.Move(pubKeyFileName, clientLocation + getFileNameOnly(pubKeyFileName));
-                    }
-                    catch
-                    {
-                        File.Replace(pubKeyFileName, clientLocation+getFileNameOnly(pubKeyFileName), null);    
-                    }
+                    MoveFile(pubKeyFileName, pubKeyFileName);
+                    // try
+                    // {
+                    //     File.Move(pubKeyFileName, clientLocation + getFileNameOnly(pubKeyFileName));
+                    // }
+                    // catch
+                    // {
+                    //     File.Replace(pubKeyFileName, clientLocation+getFileNameOnly(pubKeyFileName), null);    
+                    // }
                     
                     
                     ///////////////////////////////FOR TESTS:

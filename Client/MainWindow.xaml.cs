@@ -98,27 +98,31 @@ namespace CourseProjectCryptography2021
                     
                     CypherMethods.EncryptKey(rsaCore, _mainWindowViewModel.SymmetricKeyFile, _mainWindowViewModel.SymmetricKeyFile+"Encrypted");
                     // File.Replace(getFileNameOnly(_mainWindowViewModel.SymmetricKeyFile+"Encrypted"), getFileNameOnly(serverLocation+"EncryptedSymmetricKey"), null);
-                    try
-                    {
-                        File.Move(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+getFileNameOnly("EncryptedSymmetricKey"));
-                    }
-                    catch
-                    {
-                        File.Replace(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+getFileNameOnly("EncryptedSymmetricKey"), null);    
-                    }
+                    MoveFile(_mainWindowViewModel.SymmetricKeyFile + "Encrypted", "EncryptedSymmetricKey");
+                    
+                    // try
+                    // {
+                    //     File.Move(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+getFileNameOnly("EncryptedSymmetricKey"));
+                    // }
+                    // catch
+                    // {
+                    //     File.Replace(_mainWindowViewModel.SymmetricKeyFile+"Encrypted", serverLocation+getFileNameOnly("EncryptedSymmetricKey"), null);    
+                    // }
 
                     if (_mainWindowViewModel.EncryptionMode != "ECB")
                     {
                         CypherMethods.EncryptKey(rsaCore, _mainWindowViewModel.IvFilePath, _mainWindowViewModel.IvFilePath+"Encrypted");
                         //File.Replace(getFileNameOnly(_mainWindowViewModel.IvFilePath+"Encrypted"), getFileNameOnly(serverLocation+"EncryptedIV"), null);
-                        try
-                        {
-                            File.Move((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"));
-                        }
-                        catch
-                        {
-                            File.Replace((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"), null);    
-                        }
+                        MoveFile(_mainWindowViewModel.IvFilePath+"Encrypted", "EncryptedIV");
+                        
+                        // try
+                        // {
+                        //     File.Move((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"));
+                        // }
+                        // catch
+                        // {
+                        //     File.Replace((_mainWindowViewModel.IvFilePath+"Encrypted"), serverLocation+getFileNameOnly("EncryptedIV"), null);    
+                        // }
                     }
                     
 
@@ -140,14 +144,15 @@ namespace CourseProjectCryptography2021
                     
                     _mainWindowViewModel.MainTaskManager.RunEncryptionProcess();
                     // File.Replace(getFileNameOnly(outputFileName), getFileNameOnly(serverLocation+outputFileName), null);
-                    try
-                    {
-                        File.Move((outputFileName), serverLocation+getFileNameOnly(outputFileName));
-                    }
-                    catch
-                    {
-                        File.Replace((outputFileName), serverLocation+getFileNameOnly(outputFileName), null);    
-                    }
+                    MoveFile(outputFileName, outputFileName);
+                    // try
+                    // {
+                    //     File.Move((outputFileName), serverLocation+getFileNameOnly(outputFileName));
+                    // }
+                    // catch
+                    // {
+                    //     File.Replace((outputFileName), serverLocation+getFileNameOnly(outputFileName), null);    
+                    // }
                     
                     Application.Current.Dispatcher.Invoke(() => 
                     {
@@ -245,6 +250,30 @@ namespace CourseProjectCryptography2021
         {
             ProgressBar.Content = null;
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        private void MoveFile(string sourceFilePath, string destFilePath)
+        {
+            if (File.Exists(serverLocation + getFileNameOnly(destFilePath)))
+                File.Replace(sourceFilePath, serverLocation + getFileNameOnly(destFilePath), null);
+            else
+                File.Move(sourceFilePath, serverLocation + getFileNameOnly(destFilePath));
+        }
+        
+        
         
         private string getFileNameOnly(string filePath)
         {
