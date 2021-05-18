@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseProjectCryptography2021"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="CryptographyCP2021_Client" Width="1000" Height="500">
+    
+    <Window.Resources>
+        <Image x:Key="LandingImage" Source="/resources/mainMenu.jpg"/>
+    </Window.Resources>
+    
     <DockPanel>
         <Grid>
             <Grid.RowDefinitions>
@@ -21,56 +26,76 @@
                 </Grid.ColumnDefinitions>
                 
                 
-                <ContentPresenter x:Name="ProgressBar"></ContentPresenter>
+                <ContentPresenter x:Name="ProgressBar"
+                                  Content="{StaticResource LandingImage}"></ContentPresenter>
                 
-                <StackPanel
+                <Grid
                     Grid.Column="1"
                     Grid.Row="0">
                     
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
                         <TextBlock TextAlignment="Center">Control</TextBlock>
                     </Grid>
                     
                     
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="1">
+                        
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         
-                        <StackPanel
+                        <Grid
                             Grid.Column="0"
                             Grid.Row="0">
-                        
-                            <Button Click="OnChooseDataFileButtonClick">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button 
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                Click="OnChooseDataFileButtonClick">
                                 File with data
                             </Button>
-                            <Button Click="OnChooseSymmetricKeyFileButtonClick">
+                            <Button 
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Click="OnChooseSymmetricKeyFileButtonClick">
                                 Key file
                             </Button>
-                            <Button
+                            
+                            <Button 
+                                Grid.Column="0"
+                                Grid.Row="2"
                                 Click="OnChoosePublicKeyFileButtonClick">
-                                Pub key file
+                                Public key file
                             </Button>
-                            <Button Click="OnChooseIvFileButtonClick">
+                            <Button 
+                                Grid.Column="0"
+                                Grid.Row="3"
+                                Click="OnChooseIvFileButtonClick">
                                 IV file
                             </Button>
                             <TextBox
+                                Grid.Column="0"
+                                Grid.Row="4"
                                 x:Name="OutPutFilePathHolder">
-                                ./resources/OutPutFilePath
+                                ./resources/YourDecryptedFile
                             </TextBox>
-                        </StackPanel>
+                        </Grid>
                         
                         <StackPanel
-                            Grid.Column="2"
+                            Grid.Column="1"
                             Grid.Row="0">
                             <TextBlock TextAlignment="Center">
                                 MAGENTA key size
@@ -104,16 +129,16 @@
                             </ComboBox>
                         </StackPanel>
                     </Grid>
-                </StackPanel>
+                </Grid>
                
             </Grid>
+            
             
             
             <Grid
                 Grid.Row="1">
                 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 
@@ -122,33 +147,31 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     
                     <Button
-                        Grid.Row="1"
                         Grid.Column="0"
                         x:Name="SendFileButton"
                         
                         Click="OnSendFileButtonClick"
                         Foreground="DimGray"
                         FontSize="30"
-                        Margin="5">
+                        Margin="55">
                         
-                        Send a file
+                        Send file
                     </Button>
-                    <!-- <Button -->
-                    <!--     Grid.Column="2" -->
-                    <!--     Click="OnCancelButtonClick" -->
-                    <!--     Foreground="Red" -->
-                    <!--     FontSize="50" -->
-                    <!--     Margin="5"> -->
-                    <!--     Cancel -->
-                    <!-- </Button> -->
+                    
+                    <Button
+                        Grid.Column="1"
+                        Click="OnCancelButtonClick"
+                        Foreground="Red"
+                        FontSize="30"
+                        Margin="55">
+                        Cancel
+                    </Button>
                 </Grid>
             </Grid>
             

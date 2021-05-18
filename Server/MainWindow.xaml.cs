@@ -348,7 +348,8 @@ namespace CourseProjectCryptography2021
         
         private void removeContent()
         {
-            ProgressBar.Content = null;
+            var img = this.FindResource("LandingImage") as Image;
+            ProgressBar.Content = img;
         }
 
 

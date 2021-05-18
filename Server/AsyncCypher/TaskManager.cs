@@ -385,6 +385,7 @@ namespace Task_8.AsyncCypher
                 int actualFileSize = 0;
                 int fullArrSize = 0;
                 byte[] plainTextBytes = null;
+                var outputStream = File.Open(outputFilePath, FileMode.Create);
                 using (BinaryWriter binWriter = new BinaryWriter(new MemoryStream()))
                 {
                     foreach (var promise in allTasks)
@@ -425,12 +426,11 @@ namespace Task_8.AsyncCypher
                     // {
                         //plainTextBytes = binReader.ReadBytes(fullArrSize);
                     //}
-                    using (var outputStream = File.Open(outputFilePath, FileMode.Append))
-                    {
-                        MessageBox.Show("Output file is " + outputFilePath);
-                        outputStream.Write(plainTextBytes, 0, plainTextBytes.Length);
-                        outputStream.Close();
-                    }
+                    
+                    MessageBox.Show("Output file is " + outputFilePath);
+                    outputStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                    outputStream.Close();
+                    
                     
                 }
                 

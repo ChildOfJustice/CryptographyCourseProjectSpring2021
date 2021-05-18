@@ -52,11 +52,23 @@
             <SubType>Designer</SubType>
         </ApplicationDefinition>
         <Compile Include="BaseViewModel.cs" />
+        <Compile Include="DialogHost\DialogHostElement.xaml.cs">
+          <DependentUpon>DialogHostElement.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="DialogHost\DialogHostViewModel.cs" />
+        <Compile Include="DialogHost\RelayCommand.cs" />
         <Compile Include="MainWindowViewModel.cs" />
+        <Compile Include="SpinnerDialog\Content.xaml.cs">
+          <DependentUpon>Content.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="SpinnerDialog\SpinnerDialogElement.xaml.cs">
+          <DependentUpon>SpinnerDialogElement.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Spinner\CircularProgressBar.xaml.cs">
           <DependentUpon>CircularProgressBar.xaml</DependentUpon>
         </Compile>
         <Compile Include="Spinner\SpinnerViewModel.cs" />
+        <Page Include="DialogHost\DialogHostElement.xaml" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -72,6 +84,8 @@
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="SpinnerDialog\Content.xaml" />
+        <Page Include="SpinnerDialog\SpinnerDialogElement.xaml" />
         <Page Include="Spinner\CircularProgressBar.xaml" />
     </ItemGroup>
     <ItemGroup>

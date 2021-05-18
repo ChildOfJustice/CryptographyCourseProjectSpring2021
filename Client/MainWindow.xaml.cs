@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using CourseProjectCryptography2021.Spinner;
 using SardorRsa;
+using Task_3.WPF_Control_Elements.SpinnerDialog;
 using Task_8;
 using Task_8.AsyncCypher;
 
@@ -56,7 +57,7 @@ namespace CourseProjectCryptography2021
                 {
                     Application.Current.Dispatcher.Invoke(() => 
                     {
-                        setContent();
+                        setContent("Searching for the key and IV...");
                     });
                     if (_mainWindowViewModel.SymmetricKeyFile == null)
                     {
@@ -239,16 +240,23 @@ namespace CourseProjectCryptography2021
             
         }
 
-        private void setContent()
+        private void setContent(string message)
         {
             var pb = new CircularProgressBar();
-            //pb.Message = "Wait...";
+            //pb.Message = message;
             ProgressBar.Content = pb;
         }
+
+        // private void changeMessage(string message)
+        // {
+        //     SpinnerDialogElement dialog = (SpinnerDialogElement) ProgressBar.Content;
+        //     dialog.Message = message;
+        // }
         
         private void removeContent()
         {
-            ProgressBar.Content = null;
+            var img = this.FindResource("LandingImage") as Image;
+            ProgressBar.Content = img;
         }
         
         
